@@ -31,6 +31,7 @@
 			$conf['servers'][$db_count]['port'] = $db_config['port'];
 			$conf['servers'][$db_count]['username'] = $db_config['user'];
 			$conf['servers'][$db_count]['password'] = $db_config['pass'];
+			$conf['servers'][$db_count]['sslmode'] = 'require';
 		}
 	} else {
 
@@ -47,7 +48,7 @@
 	// Possible options: disable, allow, prefer, require
 	// To require SSL on older servers use option: legacy
 	// To ignore the SSL mode, use option: unspecified
-	$conf['servers'][0]['sslmode'] = 'allow';
+	$conf['servers'][0]['sslmode'] = 'require';
 
 	// Change the default database only if you cannot connect to template1.
 	// For a PostgreSQL 8.1+ server, you can set this to 'postgres'.
