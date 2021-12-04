@@ -16,6 +16,10 @@
 	// Configuration for Heroku databases
 	if(isset($_ENV['DATABASE_URL'])) {
 		$db_config = parse_url($_ENV['DATABASE_URL']);
+		if(isset($db_config['path'])) {
+			$db_config['path'] = ltrim($db_config['path'],'/');
+			$conf['servers'][0]['defaultdb'] = $db_config['path'];
+		}
 		$conf['servers'][0]['host'] = $db_config['host'];
 		$conf['servers'][0]['port'] = $db_config['port'];
 		$conf['servers'][0]['username'] = $db_config['user'];
@@ -32,6 +36,10 @@
 			$conf['servers'][$db_count]['username'] = $db_config['user'];
 			$conf['servers'][$db_count]['password'] = $db_config['pass'];
 			$conf['servers'][$db_count]['sslmode'] = 'require';
+			if(isset($db_config['path'])) {
+				$db_config['path'] = ltrim($db_config['path'],'/');
+				$conf['servers'][$db_count]['defaultdb'] = $db_config['path'];
+			}
 		}
 	} else {
 
@@ -52,7 +60,7 @@
 
 	// Change the default database only if you cannot connect to template1.
 	// For a PostgreSQL 8.1+ server, you can set this to 'postgres'.
-	$conf['servers'][0]['defaultdb'] = 'template1';
+	// $conf['servers'][0]['defaultdb'] = 'template1';
 
 	// Specify the path to the database dump utilities for this server.
 	// You can set these to '' if no dumper is available.
